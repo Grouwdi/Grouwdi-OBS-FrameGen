@@ -233,6 +233,26 @@ motion. See NVIDIA's
 
 ## Notes
 
+### Supported GPUs
+
+| GPU | Architecture | Supported? |
+|---|---|---|
+| GeForce RTX 50 series | Blackwell | ✅ (covered by NVIDIA's "and above") |
+| GeForce RTX 40 series | Ada | ✅ |
+| GeForce RTX 30 series | Ampere | ✅ |
+| GeForce RTX 20 series | Turing | ✅ |
+| GeForce GTX 1660 / 1660 Super / 1660 Ti | Turing | ✅ |
+| GeForce GTX 1650 | Turing (TU117) | ❌ No optical flow hardware |
+| GeForce GTX 10 series and older | Pascal and earlier | ❌ |
+| AMD / Intel | | ❌ The filter shows a message and passes video through |
+
+Support is based on NVIDIA's documentation: the optical flow hardware is supported on all
+Turing GPUs except TU117, and on every generation after Turing. Tested on a GeForce RTX
+4070 Ti. If a card lacks the optical flow hardware, the filter says so and passes the
+video through unchanged.
+
+### More notes
+
 - **Made for dual-PC setups with a capture card.** Motion Smoother can also be added to
   other video sources, such as Game Capture on a single PC, but that hasn't been tested.
   There, the game and the filter share one GPU.
