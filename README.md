@@ -41,8 +41,8 @@ Come hang out with me and my viewers:
 ### 1. Install
 
 1. Close OBS.
-2. Download `Grouwdi-OBS-FrameGen-1.0.0-Setup.zip` from
-   [Releases](../../releases), extract it, and run `Grouwdi-OBS-FrameGen-1.0.0-Setup.exe`.
+2. Download `Grouwdi-OBS-FrameGen-1.0-Setup.zip` from
+   [Releases](../../releases), extract it, and run `Grouwdi-OBS-FrameGen-1.0-Setup.exe`.
    Accept the administrator prompt.
    - Windows may show **"Windows protected your PC"** because the installer isn't code-signed.
      Click **More info**, then **Run anyway**.
@@ -229,7 +229,7 @@ motion. See NVIDIA's
 
 | Line | Meaning |
 |---|---|
-| `loaded (version 1.0.0)` | The plugin loaded |
+| `loaded (version 1.0)` | The plugin loaded |
 | `GPU optical flow ready: source 2560x1440, flow 1280x720, delay 3 frames` | The filter started |
 | `flow direction: loaded from saved calibration` | Calibration reused; filling works right away |
 | `Last 10 s: 598 new frames, 2 repeated, 2 smoothed (pan 0, timing 0, fill 2) ...` | Every 10 seconds: frames that arrived, repeats found, frames filled |

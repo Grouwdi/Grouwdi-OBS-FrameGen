@@ -1,5 +1,5 @@
-Grouwdi-OBS-FrameGen 1.0.0 - manual install
-(Or run Grouwdi-OBS-FrameGen-1.0.0-Setup.exe, which does all of this for you.)
+Grouwdi-OBS-FrameGen 1.0 - manual install
+(Or run Grouwdi-OBS-FrameGen-1.0-Setup.exe, which does all of this for you.)
 
 1. Close OBS.
 2. If you used an earlier build, delete its folder first. Either or both of:
@@ -12,7 +12,7 @@ Grouwdi-OBS-FrameGen 1.0.0 - manual install
    You should end up with:
       C:\ProgramData\obs-studio\plugins\Grouwdi-OBS-FrameGen\bin\64bit\Grouwdi-OBS-FrameGen.dll
 4. Start OBS. Help > Log Files > View Current Log should show
-      [Grouwdi-OBS-FrameGen] loaded (version 1.0.0)
+      [Grouwdi-OBS-FrameGen] loaded (version 1.0)
 5. Pan the camera for a few seconds once, so the flow direction is calibrated and saved.
 
 Setup and settings: see README.txt.

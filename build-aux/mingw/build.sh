@@ -42,7 +42,10 @@ sed -e "s/@CMAKE_PROJECT_NAME@/$NAME/; s/@CMAKE_PROJECT_VERSION@/$VERSION/" \
     "$ROOT/src/plugin-support.c.in" > "$B/plugin-support.c"
 
 # Windows version resource
-sed -e "s/@NAME@/$NAME/g; s/@VERSION@/$VERSION/g; s/@VERSION_COMMAS@/${VERSION//./,}/g" \
+# Windows wants a four-part numeric version: 1.0 -> 1,0,0 (the template adds the last ,0)
+IFS=. read -r V1 V2 V3 _ <<< "$VERSION"
+VERSION_COMMAS="${V1:-0},${V2:-0},${V3:-0}"
+sed -e "s/@NAME@/$NAME/g; s/@VERSION@/$VERSION/g; s/@VERSION_COMMAS@/$VERSION_COMMAS/g" \
     "$HERE/version.rc.in" > "$B/version.rc"
 x86_64-w64-mingw32-windres "$B/version.rc" -O coff -o "$B/version.o"
 

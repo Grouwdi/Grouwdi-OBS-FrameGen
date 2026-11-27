@@ -9,7 +9,7 @@ Unicode true
 !include "x64.nsh"
 
 !define PRODUCT     "Grouwdi-OBS-FrameGen"
-!define VERSION     "1.0.0"
+!define VERSION     "1.0"
 !define PUBLISHER   "Grouwdi"
 !define UNINST_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
 !ifndef STAGE
@@ -83,7 +83,7 @@ Section "Plugin" SecMain
   Call WaitForObs
 
   ; Earlier builds used the folder names "capture-smoother" (test builds) and
-  ; "Grouwdi-OBS-CaptureSmoother" (1.0.0 under its previous name) with the same filter IDs;
+  ; "Grouwdi-OBS-CaptureSmoother" (1.0 under its previous name) with the same filter IDs;
   ; OBS cannot load two of them, so the old ones are removed. Settings live in the scene
   ; files and are kept.
   ${If} ${FileExists} "$APPDATA\obs-studio\plugins\capture-smoother\*.*"
