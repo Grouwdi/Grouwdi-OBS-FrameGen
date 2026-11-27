@@ -18,6 +18,24 @@ FPS, but now every one of those frames moves.
 
 ---
 
+## Why I made this
+
+I'm very picky about my stream quality. With Twitch and Kick limiting how much bandwidth we
+get, I'm always looking for ways to improve quality wherever I can. Having a dual-PC setup
+makes projects like this one fun, and the results give my viewers a little more quality.
+
+But a dual-PC setup can also introduce stutter into the stream. While there are ways to
+reduce stutter on a dual-PC setup, this plugin goes a step further and catches more of the
+stutters that still slip through. I hope you enjoy it as much as I enjoyed building it.
+
+Come hang out with me and my viewers:
+
+- [Twitch.tv/Grouwdi](https://twitch.tv/Grouwdi)
+- [YouTube.com/@Grouwdi](https://www.youtube.com/@Grouwdi)
+- [Kick.com/Grouwdi](https://kick.com/Grouwdi)
+
+---
+
 ## Quick setup
 
 ### 1. Install
@@ -232,22 +250,6 @@ motion. See NVIDIA's
 ---
 
 ## Notes
-
-### Why I made this
-
-I'm very picky about my stream quality. With Twitch and Kick limiting how much bandwidth we
-get, I'm always looking for ways to improve quality wherever I can. Having a dual-PC setup
-makes projects like this one fun, and the results give my viewers a little more quality.
-
-But a dual-PC setup can also introduce stutter into the stream. While there are ways to
-reduce stutter on a dual-PC setup, this plugin goes a step further and catches more of the
-stutters that still slip through. I hope you enjoy it as much as I enjoyed building it.
-
-Come hang out with me and my viewers:
-
-- [Twitch.tv/Grouwdi](https://twitch.tv/Grouwdi)
-- [YouTube.com/@Grouwdi](https://www.youtube.com/@Grouwdi)
-- [Kick.com/Grouwdi](https://kick.com/Grouwdi)
 
 ### Supported GPUs
 
