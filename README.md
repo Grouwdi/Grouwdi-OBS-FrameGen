@@ -46,7 +46,10 @@ New filters start with the recommended settings:
 | Optical flow quality | Medium |
 | Optical flow resolution (width) | 1280 |
 
-### 4. Fix audio sync
+### 4. Fix audio sync (only if needed)
+
+> **Note:** I've never noticed an audio delay with this plugin myself. Use this step only
+> if you hear or feel the audio running ahead of the video. Otherwise, skip it.
 
 The filter holds the video back 3 frames (about 50 ms at 60 FPS) so it can see ahead.
 Delay your audio by the same amount:
