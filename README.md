@@ -269,6 +269,34 @@ Turing GPUs except TU117, and on every generation after Turing. Tested on a GeFo
 4070 Ti. If a card lacks the optical flow hardware, the filter says so and passes the
 video through unchanged.
 
+### How much it can do
+
+The plugin is built for the everyday case: a game that dips below 60 FPS now and then, so
+the capture card repeats the odd frame. But it can do a lot more than patch occasional
+dips. It fills up to two repeated frames in a row, so even a game running at 30 FPS comes
+out on your stream as smooth 60 FPS motion, with every frame moving.
+
+The more frames it has to generate, the more any slight ghosting around fast-moving
+objects can show. It has mostly been tested with light repeats, where it works best.
+
+| Game's frame rate on a 60 FPS capture | What the plugin does |
+|---|---|
+| 50–59 FPS | Fills the occasional repeated frame |
+| 30–49 FPS | Fills frequent single repeats |
+| 20–29 FPS | Fills up to two repeats in a row |
+| Below 20 FPS, or freezes of about 50 ms or longer | Shown as-is: too far apart to bridge |
+
+### Also important to check
+
+These settings work alongside the plugin. They cut down repeated frames before they reach
+OBS, so the plugin has less to fill and can polish your stream even further.
+
+| Check | Where | Why it helps |
+|---|---|---|
+| **Use an OBS projector instead of Windows display cloning** | On the gaming PC: set Windows to **Extend** your displays (not Duplicate), capture the game in OBS there, and open a **Fullscreen Projector** on the display that feeds the capture card | Cloning ties the capture card's output to your main monitor's timing, which adds repeats. A projector sends the capture card its own steady signal. |
+| **Turn on Buffering on the capture card source** | OBS PC: capture card source **Properties** > **Buffering: Enable** | Smooths out uneven frame delivery from the card, so OBS doesn't miss frames and re-show old ones |
+| **Set OBS to High priority** | OBS **Settings** > **Advanced** > **Process Priority: High** (on each PC running OBS) | Keeps Windows from starving OBS of CPU time while a game or other apps are busy |
+
 ### More notes
 
 - **Made for dual-PC setups with a capture card.** Motion Smoother can also be added to
