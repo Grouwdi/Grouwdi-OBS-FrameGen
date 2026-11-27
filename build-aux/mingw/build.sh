@@ -17,7 +17,10 @@ SIMDE=${2:-}
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$HERE/../.." && pwd)
 NAME=$(sed -n 's/.*"name": *"\([^"]*\)".*/\1/p' "$ROOT/buildspec.json" | head -1)
-VERSION=$(sed -n 's/.*"version": *"\([0-9][0-9.]*\)".*/\1/p' "$ROOT/buildspec.json" | tail -1)
+# "version" is the numeric x.y.z the OBS template's CMake needs; "versionLabel" (if set)
+# is what people see: the OBS log, file names, installer and file properties.
+VERSION=$(sed -n 's/.*"versionLabel": *"\([^"]*\)".*/\1/p' "$ROOT/buildspec.json" | head -1)
+[ -n "$VERSION" ] || VERSION=$(sed -n 's/.*"version": *"\([0-9][0-9.]*\)".*/\1/p' "$ROOT/buildspec.json" | tail -1)
 OUT="$ROOT/release"
 B="$ROOT/build_mingw"
 CC=x86_64-w64-mingw32-gcc

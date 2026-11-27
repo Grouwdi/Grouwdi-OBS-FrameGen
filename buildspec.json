@@ -38,7 +38,8 @@
     },
     "name": "Grouwdi-OBS-FrameGen",
     "displayName": "Grouwdi OBS FrameGen",
-    "version": "1.0",
+    "version": "1.0.0",
+    "versionLabel": "1.0",
     "author": "Grouwdi",
     "website": "https://www.twitch.tv/grouwdi",
     "email": ""
