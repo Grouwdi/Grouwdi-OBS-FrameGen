@@ -1,0 +1,99 @@
+// Grouwdi-OBS-FrameGen - GPU shaders.
+//
+// Interp: renders the frame "alpha" of the way from image0 to image1 using
+// forward flow (flow01) and backward flow (flow10) in UV units, with the same
+// math as reference/ref_smoother.py interpolate():
+//   F_a0 = -(1-a)*a*F01 + a^2*F10       (where pixel p came from in image0)
+//   F_a1 = (1-a)^2*F01 - a*(1-a)*F10    (where pixel p came from in image1)
+//   out  = (1-a)*image0(p + F_a0) + a*image1(p + F_a1)
+// plus a per-pixel static check so HUD / overlay pixels are not dragged along.
+//
+// Gray: luma of image, downscaled with a 4-tap filter, for optical flow.
+
+uniform float4x4 ViewProj;
+uniform texture2d image;
+uniform texture2d image0;
+uniform texture2d image1;
+uniform texture2d flow01;
+uniform texture2d flow10;
+uniform float alpha;
+uniform float2 src_texel; // 1 / source size, for the Gray downscale
+
+sampler_state lin_clamp {
+	Filter   = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+struct VertInOut {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+	VertInOut vert_out;
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv  = vert_in.uv;
+	return vert_out;
+}
+
+float3 enc(float3 c)
+{
+	// approximate gamma encoding, so the static check behaves the same in dark and bright areas
+	return pow(max(c, 0.0), 1.0 / 2.2);
+}
+
+float4 PSInterp(VertInOut vert_in) : TARGET
+{
+	float2 uv = vert_in.uv;
+	float2 f01 = flow01.Sample(lin_clamp, uv).xy;
+	float2 f10 = flow10.Sample(lin_clamp, uv).xy;
+	float a = alpha;
+	float2 fa0 = -(1.0 - a) * a * f01 + a * a * f10;
+	float2 fa1 = (1.0 - a) * (1.0 - a) * f01 - a * (1.0 - a) * f10;
+	float4 w0 = image0.Sample(lin_clamp, uv + fa0);
+	float4 w1 = image1.Sample(lin_clamp, uv + fa1);
+	float4 z0 = image0.Sample(lin_clamp, uv);
+	float4 z1 = image1.Sample(lin_clamp, uv);
+
+	// Static check (reduces ghosting on HUDs, crosshairs, overlays): where NOT
+	// warping makes the two frames match clearly better than warping, the pixel is
+	// static content, so blend the unwarped pixels instead of dragging them along
+	// with the camera motion. Same math as reference/eval_ghost.py blend_aware().
+	float ew = dot(abs(enc(w0.rgb) - enc(w1.rgb)), float3(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0));
+	float ez = dot(abs(enc(z0.rgb) - enc(z1.rgb)), float3(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0));
+	float ks = smoothstep(0.0, 0.04, ew - ez);
+	return lerp(lerp(w0, w1, a), lerp(z0, z1, a), ks);
+}
+
+float4 PSGray(VertInOut vert_in) : TARGET
+{
+	float2 uv = vert_in.uv;
+	float2 o = src_texel * 0.75;
+	float3 c = image.Sample(lin_clamp, uv + float2(-o.x, -o.y)).rgb;
+	c += image.Sample(lin_clamp, uv + float2(o.x, -o.y)).rgb;
+	c += image.Sample(lin_clamp, uv + float2(-o.x, o.y)).rgb;
+	c += image.Sample(lin_clamp, uv + float2(o.x, o.y)).rgb;
+	c *= 0.25;
+	float l = dot(c, float3(0.2126, 0.7152, 0.0722));
+	return float4(l, l, l, 1.0);
+}
+
+technique Interp
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSInterp(vert_in);
+	}
+}
+
+technique Gray
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSGray(vert_in);
+	}
+}

@@ -1,0 +1,20 @@
+# build output
+/build/
+/build_*/
+/release/
+*.o
+*.a
+*.dll
+*.exe
+*.zip
+
+# Python caches
+__pycache__/
+*.pyc
+
+# editors / OS
+.vs/
+.vscode/
+.DS_Store
+*.lock.json
+/cmake/.CMakeBuildNumber
